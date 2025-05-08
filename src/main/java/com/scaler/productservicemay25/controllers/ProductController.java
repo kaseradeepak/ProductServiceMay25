@@ -12,3 +12,4 @@ public class ProductController {
 }
 
 //  Adding this comment to understand git fetch & pull.
+// Adding one more comment to understand git pull --rebase.
