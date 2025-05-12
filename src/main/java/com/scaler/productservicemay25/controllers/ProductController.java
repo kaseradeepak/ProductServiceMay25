@@ -1,13 +1,10 @@
 package com.scaler.productservicemay25.controllers;
 
 import com.scaler.productservicemay25.models.Product;
-import com.scaler.productservicemay25.services.FakeStoreProductService;
 import com.scaler.productservicemay25.services.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -29,7 +26,7 @@ public class ProductController {
     // localhost:8080/products/
     @GetMapping("/")
     public List<Product> getAllProducts() {
-        return new ArrayList<>();
+        return productService.getAllProducts();
     }
 
     // localhost:8080/products/

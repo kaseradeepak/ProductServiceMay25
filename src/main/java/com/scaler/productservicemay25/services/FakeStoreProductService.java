@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 //Note: This service class will implement all the API's using FakeStore.
@@ -27,13 +28,26 @@ public class FakeStoreProductService implements ProductService {
         FakeStoreProductDto fakeStoreProductDto = fakeStoreProductDtoResponseEntity.getBody();
 
         //Convert FakeStoreProductDto into Product Object.
-
         return convertFakeStoreProductDtoToProduct(fakeStoreProductDto);
     }
 
     @Override
     public List<Product> getAllProducts() {
-        return List.of();
+        ResponseEntity<FakeStoreProductDto[]> fakeStoreProductDtoResponse =
+                restTemplate.getForEntity(
+                        "https://fakestoreapi.com/products",
+                        FakeStoreProductDto[].class
+                );
+
+        FakeStoreProductDto[] fakeStoreProductDtos =
+                fakeStoreProductDtoResponse.getBody();
+        List<Product> products = new ArrayList<>();
+
+        for (FakeStoreProductDto fakeStoreProductDto : fakeStoreProductDtos) {
+            products.add(convertFakeStoreProductDtoToProduct(fakeStoreProductDto));
+        }
+
+        return products;
     }
 
     @Override
