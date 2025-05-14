@@ -4,6 +4,7 @@ import com.scaler.productservicemay25.dtos.ExceptionDto;
 import com.scaler.productservicemay25.exceptions.ProductNotFoundException;
 import com.scaler.productservicemay25.models.Product;
 import com.scaler.productservicemay25.services.ProductService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,8 @@ public class ProductController {
     private final RestTemplate restTemplate;
     private ProductService productService;
 
-    public ProductController(ProductService productService, RestTemplate restTemplate) {
+    public ProductController(@Qualifier("${variable}") ProductService productService
+            , RestTemplate restTemplate) {
         this.productService = productService;
         this.restTemplate = restTemplate;
     }
