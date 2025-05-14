@@ -18,7 +18,7 @@ public class ProductController {
     private final RestTemplate restTemplate;
     private ProductService productService;
 
-    public ProductController(@Qualifier("${variable}") ProductService productService
+    public ProductController(@Qualifier("fakeStoreProductService") ProductService productService
             , RestTemplate restTemplate) {
         this.productService = productService;
         this.restTemplate = restTemplate;
