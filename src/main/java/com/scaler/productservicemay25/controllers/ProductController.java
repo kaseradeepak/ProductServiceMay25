@@ -1,6 +1,7 @@
 package com.scaler.productservicemay25.controllers;
 
 import com.scaler.productservicemay25.dtos.ExceptionDto;
+import com.scaler.productservicemay25.exceptions.CategoryNotFoundException;
 import com.scaler.productservicemay25.exceptions.ProductNotFoundException;
 import com.scaler.productservicemay25.models.Product;
 import com.scaler.productservicemay25.services.ProductService;
@@ -18,7 +19,7 @@ public class ProductController {
     private final RestTemplate restTemplate;
     private ProductService productService;
 
-    public ProductController(@Qualifier("fakeStoreProductService") ProductService productService
+    public ProductController(@Qualifier("selfProductService") ProductService productService
             , RestTemplate restTemplate) {
         this.productService = productService;
         this.restTemplate = restTemplate;
@@ -56,8 +57,8 @@ public class ProductController {
 
     // localhost:8080/products/
     @PostMapping()
-    public Product createProduct(@RequestBody Product product) {
-        return new Product();
+    public Product createProduct(@RequestBody Product product) throws CategoryNotFoundException {
+        return productService.createProduct(product);
     }
 
     @DeleteMapping("/{id}")
@@ -65,12 +66,12 @@ public class ProductController {
         return null;
     }
 
-    @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<ExceptionDto> handleRuntimeException() {
-        ExceptionDto exceptionDto = new ExceptionDto();
-        exceptionDto.setMessage("Handling exception with the controller.");
-        return new ResponseEntity<>(exceptionDto, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+//    @ExceptionHandler(RuntimeException.class)
+//    public ResponseEntity<ExceptionDto> handleRuntimeException() {
+//        ExceptionDto exceptionDto = new ExceptionDto();
+//        exceptionDto.setMessage("Handling exception with the controller.");
+//        return new ResponseEntity<>(exceptionDto, HttpStatus.INTERNAL_SERVER_ERROR);
+//    }
     //Update API's
     // updateProduct() -> PATCH
     // replaceProduct() -> PUT
