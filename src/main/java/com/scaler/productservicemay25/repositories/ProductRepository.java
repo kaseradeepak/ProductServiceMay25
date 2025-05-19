@@ -3,6 +3,8 @@ package com.scaler.productservicemay25.repositories;
 import com.scaler.productservicemay25.models.Category;
 import com.scaler.productservicemay25.models.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -37,6 +39,16 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Override
     void deleteById(Long productId);
+
+    //HQL -> We can use models.
+    //@Query("select p.id as id, p.title as title from Product p where p.id = :productId")
+    //@Query("select p.title as title, p.description as description from Product p where p.id = :id")
+    //@Query("select p from Product p where p.id = 1")
+    //@Query("SELECT p FROM com.scaler.productservicemay25.models.Product p WHERE p.id = :id")
+    //List<Product> findProductWithGivenId(@Param("id") Long productId);
+
+    @Query(value = "select * from products p where p.id = :id", nativeQuery = true)
+    Product findProductWithGivenId(@Param("id") Long productId);
 }
 
 
