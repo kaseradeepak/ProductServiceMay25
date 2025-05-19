@@ -81,6 +81,6 @@ public class SelfProductService implements ProductService {
 
     @Override
     public void deleteProduct(Long productId) {
-        return productRepository.deleteById(productId);
+        productRepository.deleteById(productId);
     }
 }
