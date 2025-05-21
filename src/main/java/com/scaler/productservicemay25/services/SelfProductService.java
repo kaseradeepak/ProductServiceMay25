@@ -15,14 +15,12 @@ import java.util.Optional;
 @Service("selfProductService")
 //@Primary
 public class SelfProductService implements ProductService {
-    private final ProductService productService;
     private ProductRepository productRepository;
     private CategoryRepository categoryRepository;
 
-    public SelfProductService(ProductRepository productRepository, CategoryRepository categoryRepository, ProductService productService) {
+    public SelfProductService(ProductRepository productRepository, CategoryRepository categoryRepository) {
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
-        this.productService = productService;
     }
 
     @Override

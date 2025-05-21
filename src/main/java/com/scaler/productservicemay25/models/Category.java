@@ -1,9 +1,7 @@
 package com.scaler.productservicemay25.models;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 
 @Getter
