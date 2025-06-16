@@ -1,7 +1,10 @@
 package com.scaler.productservicemay25.controllers;
 
+import com.scaler.productservicemay25.commons.AuthCommons;
+import com.scaler.productservicemay25.dtos.UserDto;
 import com.scaler.productservicemay25.exceptions.CategoryNotFoundException;
 import com.scaler.productservicemay25.exceptions.ProductNotFoundException;
+import com.scaler.productservicemay25.exceptions.UnAuthorizedException;
 import com.scaler.productservicemay25.models.Product;
 import com.scaler.productservicemay25.services.ProductService;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +18,14 @@ import java.util.List;
 public class ProductController {
     private final RestTemplate restTemplate;
     private ProductService productService;
+    private AuthCommons authCommons;
 
-    public ProductController(ProductService productService
-            ,RestTemplate restTemplate) {
+    public ProductController(ProductService productService,
+                             RestTemplate restTemplate,
+                             AuthCommons authCommons) {
         this.productService = productService;
         this.restTemplate = restTemplate;
+        this.authCommons = authCommons;
     }
 
     // localhost:8080/products/10
@@ -27,7 +33,12 @@ public class ProductController {
     public Product getSingleProduct(@PathVariable("id") Long productId) throws ProductNotFoundException {
         //Should we call FakeStore API here ? No, we should make a call to the Service.
 
-        System.out.println("DEBUG POINT");
+        //UserDto userDto = authCommons.validateToken(token);
+
+//        if (userDto == null) {
+//            //UnAuthorized access.
+//            throw new UnAuthorizedException("Invalid token provided.");
+//        }
 
         return productService.getSingleProduct(productId); // @198347
 

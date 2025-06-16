@@ -29,6 +29,21 @@ class ProductServiceMay25ApplicationTests {
     void contextLoads() {
     }
 
+//    @Test
+//    void insertProductInRDS() {
+////        Category category = new Category();
+////        category.setTitle("Apple");
+////        category = categoryRepository.save(category);
+//
+////        Product product = new Product();
+////        product.setTitle("Apple iPhone 16 pro");
+////        product.setDescription("Latest iPhone!");
+////        product.setPrice(140000.0);
+////        product.setCategory(categoryRepository.findById(1L).get());
+////
+////        productRepository.save(product);
+//    }
+
     @Test
     void testQuery() {
         //EAGER

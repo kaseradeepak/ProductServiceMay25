@@ -15,7 +15,7 @@ import java.util.List;
 
 //Note: This service class will implement all the API's using FakeStore.
 @Service("fakeStoreProductService")
-@Primary
+//@Primary
 public class FakeStoreProductService implements ProductService {
     private RestTemplate restTemplate;
 
