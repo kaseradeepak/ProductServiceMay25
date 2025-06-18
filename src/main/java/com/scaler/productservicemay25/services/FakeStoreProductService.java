@@ -5,7 +5,10 @@ import com.scaler.productservicemay25.exceptions.ProductNotFoundException;
 import com.scaler.productservicemay25.models.Category;
 import com.scaler.productservicemay25.models.Product;
 import jakarta.persistence.PrimaryKeyJoinColumn;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -15,19 +18,32 @@ import java.util.List;
 
 //Note: This service class will implement all the API's using FakeStore.
 @Service("fakeStoreProductService")
-//@Primary
+@Primary
 public class FakeStoreProductService implements ProductService {
     private RestTemplate restTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
 
-    public FakeStoreProductService(RestTemplate restTemplate) {
+//    @Value("${redis.products.section}")
+//    private String productsSection;
+
+    public FakeStoreProductService(RestTemplate restTemplate, RedisTemplate<String, Object> redisTemplate) {
         this.restTemplate = restTemplate;
+        this.redisTemplate = redisTemplate;
     }
 
     @Override
     public Product getSingleProduct(Long productId) throws ProductNotFoundException {
 
-//        throw new RuntimeException("Something went wrong");
+        //First check if the Product with the input productId exists in the Redis.
+        Product product = (Product) redisTemplate.opsForHash().get("PRODUCTS", "PRODUCT_" + productId);
 
+        if (product != null) {
+            //Product exists in Redis, return it.
+            //CACHE HIT
+            return product;
+        }
+
+        //CACHE MISS
         ResponseEntity<FakeStoreProductDto> fakeStoreProductDtoResponseEntity = restTemplate.getForEntity(
                 "https://fakestoreapi.com/products/" + productId,
                 FakeStoreProductDto.class);
@@ -40,7 +56,12 @@ public class FakeStoreProductService implements ProductService {
         }
 
         //Convert FakeStoreProductDto into Product Object.
-        return convertFakeStoreProductDtoToProduct(fakeStoreProductDto);
+        product = convertFakeStoreProductDtoToProduct(fakeStoreProductDto);
+
+        //Before returning the Product, store it in Redis.
+        redisTemplate.opsForHash().put("PRODUCTS", "PRODUCT_" + productId, product);
+
+        return product;
     }
 
     @Override
