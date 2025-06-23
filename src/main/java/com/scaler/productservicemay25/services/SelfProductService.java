@@ -2,18 +2,19 @@ package com.scaler.productservicemay25.services;
 
 import com.scaler.productservicemay25.exceptions.CategoryNotFoundException;
 import com.scaler.productservicemay25.exceptions.ProductNotFoundException;
-import com.scaler.productservicemay25.models.Category;
 import com.scaler.productservicemay25.models.Product;
 import com.scaler.productservicemay25.repositories.CategoryRepository;
 import com.scaler.productservicemay25.repositories.ProductRepository;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service("selfProductService")
-//@Primary
+@Primary
 public class SelfProductService implements ProductService {
     private ProductRepository productRepository;
     private CategoryRepository categoryRepository;
@@ -80,5 +81,28 @@ public class SelfProductService implements ProductService {
     @Override
     public void deleteProduct(Long productId) {
         productRepository.deleteById(productId);
+    }
+
+    @Override
+    public Page<Product> getProductsByTitle(String title, int pageNumber, int pageSize) {
+//        Sort sort = Sort
+//                .by(Sort.Direction.ASC, "price")
+//                .by(Sort.Direction.DESC, "title");
+
+//        Sort sort = null;
+//        if (sortInput.equals("ASC")) {
+//            sort = Sort.by(Sort.Direction.ASC, "price");
+//        } else {
+//            sort = Sort.by(Sort.Direction.DESC, "price");
+//        }
+//
+//        sort.by(......)
+
+        return productRepository.findByTitleContainsIgnoreCase(
+                title,
+                PageRequest.of(pageNumber,
+                        pageSize,
+                        Sort.by(Sort.Direction.ASC, "price").by(Sort.Direction.ASC, "title"))
+        );
     }
 }

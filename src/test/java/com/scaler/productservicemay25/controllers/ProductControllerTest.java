@@ -1,18 +1,8 @@
 package com.scaler.productservicemay25.controllers;
 
-import com.scaler.productservicemay25.exceptions.ProductNotFoundException;
-import com.scaler.productservicemay25.models.Product;
-import com.scaler.productservicemay25.services.ProductService;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.when;
-
-@SpringBootTest
+//@SpringBootTest
 class ProductControllerTest {
 //    @MockitoBean
 //    private ProductService productService;

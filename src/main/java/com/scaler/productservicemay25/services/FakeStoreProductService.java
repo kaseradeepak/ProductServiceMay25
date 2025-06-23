@@ -8,6 +8,7 @@ import jakarta.persistence.PrimaryKeyJoinColumn;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.Page;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,7 @@ import java.util.List;
 
 //Note: This service class will implement all the API's using FakeStore.
 @Service("fakeStoreProductService")
-@Primary
+//@Primary
 public class FakeStoreProductService implements ProductService {
     private RestTemplate restTemplate;
     private RedisTemplate<String, Object> redisTemplate;
@@ -90,6 +91,11 @@ public class FakeStoreProductService implements ProductService {
 
     @Override
     public void deleteProduct(Long productId) {}
+
+    @Override
+    public Page<Product> getProductsByTitle(String title, int pageNumber, int pageSize) {
+        return Page.empty();
+    }
 
     private static Product convertFakeStoreProductDtoToProduct(FakeStoreProductDto fakeStoreProductDto) {
         if (fakeStoreProductDto == null) {

@@ -7,6 +7,7 @@ import com.scaler.productservicemay25.exceptions.ProductNotFoundException;
 import com.scaler.productservicemay25.exceptions.UnAuthorizedException;
 import com.scaler.productservicemay25.models.Product;
 import com.scaler.productservicemay25.services.ProductService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -65,6 +66,11 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
+    @GetMapping("/title/{title}/{pageNumber}/{pageSize}")
+    public Page<Product> getProductByTitle(@PathVariable("title") String title, @PathVariable("pageNumber") int pageNumber, @PathVariable("pageSize") int pageSize) {
+        return productService.getProductsByTitle(title, pageNumber, pageSize);
+    }
+
     // localhost:8080/products
     @PostMapping()
     public Product createProduct(@RequestBody Product product) throws CategoryNotFoundException {
@@ -85,6 +91,13 @@ public class ProductController {
     //Update API's
     // updateProduct() -> PATCH
     // replaceProduct() -> PUT
+
+    @GetMapping("/searchByTitle/{title}")
+    List<Product> getProductsByTitle(@PathVariable String title) {
+        //select * from products where lower(title) LIKE '%iphone%'
+
+        return null;
+    }
 }
 
 /*
