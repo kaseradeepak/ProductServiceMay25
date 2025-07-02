@@ -34,7 +34,7 @@ public class ProductController {
     public Product getSingleProduct(@PathVariable("id") Long productId) throws ProductNotFoundException {
         //Should we call FakeStore API here ? No, we should make a call to the Service.
 
-        //UserDto userDto = authCommons.validateToken(token);
+        UserDto userDto = authCommons.validateToken("SampleToken");
 
 //        if (userDto == null) {
 //            //UnAuthorized access.

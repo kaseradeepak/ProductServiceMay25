@@ -14,8 +14,12 @@ public class AuthCommons {
     }
 
     public UserDto validateToken(String tokenValue) {
+
+        //Instead of hard coding the URL, we should get the list of IPs from
+        //Eureka Server and send the request in load balanced manner.
+
         ResponseEntity<UserDto> responseEntity = restTemplate.getForEntity(
-                "http://localhost:8080/auth/validate/" + tokenValue,
+                "http://USERSERVICEJUNE25/users/validate/" + tokenValue,
                 UserDto.class
         );
 
