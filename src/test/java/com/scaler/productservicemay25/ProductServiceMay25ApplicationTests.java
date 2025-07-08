@@ -15,19 +15,19 @@ import java.util.Optional;
 
 @SpringBootTest
 class ProductServiceMay25ApplicationTests {
-    @Autowired
-    private ProductRepository productRepository;
-
-    @Autowired
-    private CategoryRepository categoryRepository;
+//    @Autowired
+//    private ProductRepository productRepository;
+//
+//    @Autowired
+//    private CategoryRepository categoryRepository;
 
 //    public ProductServiceMay25ApplicationTests(ProductRepository productRepository) {
 //        this.productRepository = productRepository;
 //    }
-
-    @Test
-    void contextLoads() {
-    }
+//
+//    @Test
+//    void contextLoads() {
+//    }
 
 //    @Test
 //    void insertProductInRDS() {
@@ -44,22 +44,22 @@ class ProductServiceMay25ApplicationTests {
 ////        productRepository.save(product);
 //    }
 
-    @Test
-    void testQuery() {
-        //EAGER
-//        Optional<Product> productOptional = productRepository.findById(3L);
-
-        //LAZY
-        Optional<Category> categoryOptional = categoryRepository.findById(2L);
-
+//    @Test
+//    void testQuery() {
+//        //EAGER
+////        Optional<Product> productOptional = productRepository.findById(3L);
+//
+//        //LAZY
+//        Optional<Category> categoryOptional = categoryRepository.findById(2L);
+//
+////        System.out.println("DEBUG");
+////
+////        List<Product> products = categoryOptional.get().getProducts();
+////
+////        System.out.println(products.get(0).getTitle());
+//
+//        //select * from products where category_id = 2L;
+//
 //        System.out.println("DEBUG");
-//
-//        List<Product> products = categoryOptional.get().getProducts();
-//
-//        System.out.println(products.get(0).getTitle());
-
-        //select * from products where category_id = 2L;
-
-        System.out.println("DEBUG");
-    }
+//    }
 }
